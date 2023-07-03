@@ -14,7 +14,7 @@ public class UsuarioDAO {
 
     public Usuario getUser(String login){
         try(Connection connection = new ConectaDB().getConnection()){
-            this.sql = "SELECT * FROM usuario WHERE email = ?";
+            this.sql = "SELECT * FROM usuarios WHERE email = ?";
             this.preparedStatement = connection.prepareStatement(this.sql);
             this.preparedStatement.setString(1, login);
             this.resultSet = this.preparedStatement.executeQuery();

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Lote {
     private int codigo;
-    private int id_produto;
+    private Produto produto;
     private long lote;
     private String validade;
     private int quantidade;
