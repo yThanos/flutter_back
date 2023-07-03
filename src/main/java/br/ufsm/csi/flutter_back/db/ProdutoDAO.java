@@ -14,9 +14,9 @@ public class ProdutoDAO {
 
     public String addProduto(Produto produto){
         try(Connection connection = new ConectaDB().getConnection()){
-            this.sql = "INSERT INTO produto (nome, valor) VALUES (?, ?)";
+            this.sql = "INSERT INTO produtos (nome, valor) VALUES (?, ?)";
             this.preparedStatement = connection.prepareStatement(this.sql);
-            this.preparedStatement.setString(1, produto.getNome());
+            this.preparedStatement.setString(1, produto.getNome().toUpperCase());
             this.preparedStatement.setDouble(2, produto.getValor());
             this.preparedStatement.execute();
             return "Produto adicionado com sucesso!";
@@ -29,9 +29,9 @@ public class ProdutoDAO {
 
     public String updateProduto(Produto produto, int codigo){
         try(Connection connection = new ConectaDB().getConnection()){
-            this.sql = "UPDATE produto SET nome = ?, valor = ? WHERE codigo = ?";
+            this.sql = "UPDATE produtos SET nome = ?, valor = ? WHERE codigo = ?";
             this.preparedStatement = connection.prepareStatement(this.sql);
-            this.preparedStatement.setString(1, produto.getNome());
+            this.preparedStatement.setString(1, produto.getNome().toUpperCase());
             this.preparedStatement.setDouble(2, produto.getValor());
             this.preparedStatement.setInt(3, codigo);
             this.preparedStatement.execute();
@@ -45,7 +45,7 @@ public class ProdutoDAO {
 
     public String deleteProduto(int codigo){
         try(Connection connection = new ConectaDB().getConnection()){
-            this.sql = "DELETE FROM produto WHERE codigo = ?";
+            this.sql = "DELETE FROM produtos WHERE codigo = ?";
             this.preparedStatement = connection.prepareStatement(this.sql);
             this.preparedStatement.setInt(1, codigo);
             this.preparedStatement.execute();
@@ -59,7 +59,7 @@ public class ProdutoDAO {
 
     public ArrayList<Produto> getProdutos(){
         try(Connection connection = new ConectaDB().getConnection()){
-            this.sql = "SELECT * FROM produto";
+            this.sql = "SELECT * FROM produtos";
             this.preparedStatement = connection.prepareStatement(this.sql);
             this.resultSet = this.preparedStatement.executeQuery();
             ArrayList<Produto> produtos = new ArrayList<>();
@@ -79,7 +79,7 @@ public class ProdutoDAO {
 
     public Produto getProduto(int codigo){
         try(Connection connection = new ConectaDB().getConnection()){
-            this.sql = "SELECT * FROM produto WHERE codigo = ?";
+            this.sql = "SELECT * FROM produtos WHERE codigo = ?";
             this.preparedStatement = connection.prepareStatement(this.sql);
             this.preparedStatement.setInt(1, codigo);
             this.resultSet = this.preparedStatement.executeQuery();
