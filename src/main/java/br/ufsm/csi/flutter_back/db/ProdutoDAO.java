@@ -12,22 +12,22 @@ public class ProdutoDAO {
     private PreparedStatement preparedStatement;
     private String sql;
 
-    public String addProduto(Produto produto){
+    public boolean addProduto(Produto produto){
         try(Connection connection = new ConectaDB().getConnection()){
             this.sql = "INSERT INTO produtos (nome, valor) VALUES (?, ?)";
             this.preparedStatement = connection.prepareStatement(this.sql);
             this.preparedStatement.setString(1, produto.getNome().toUpperCase());
             this.preparedStatement.setDouble(2, produto.getValor());
             this.preparedStatement.execute();
-            return "Produto adicionado com sucesso!";
+            return true;
         }
         catch (Exception e){
             e.printStackTrace();
-            return "Erro ao adicionar produto!";
+            return false;
         }
     }
 
-    public String updateProduto(Produto produto, int codigo){
+    public boolean updateProduto(Produto produto, int codigo){
         try(Connection connection = new ConectaDB().getConnection()){
             this.sql = "UPDATE produtos SET nome = ?, valor = ? WHERE codigo = ?";
             this.preparedStatement = connection.prepareStatement(this.sql);
@@ -35,25 +35,25 @@ public class ProdutoDAO {
             this.preparedStatement.setDouble(2, produto.getValor());
             this.preparedStatement.setInt(3, codigo);
             this.preparedStatement.execute();
-            return "Produto atualizado com sucesso!";
+            return true;
         }
         catch (Exception e){
             e.printStackTrace();
-            return "Erro ao atualizar produto!";
+            return false;
         }
     }
 
-    public String deleteProduto(int codigo){
+    public boolean deleteProduto(int codigo){
         try(Connection connection = new ConectaDB().getConnection()){
             this.sql = "DELETE FROM produtos WHERE codigo = ?";
             this.preparedStatement = connection.prepareStatement(this.sql);
             this.preparedStatement.setInt(1, codigo);
             this.preparedStatement.execute();
-            return "Produto deletado com sucesso!";
+            return true;
         }
         catch (Exception e){
             e.printStackTrace();
-            return "Erro ao deletar produto!";
+            return false;
         }
     }
 
