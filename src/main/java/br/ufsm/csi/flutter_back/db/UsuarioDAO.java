@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.Base64;
 
 import br.ufsm.csi.flutter_back.model.Usuario;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UsuarioDAO {
     private ResultSet resultSet;
@@ -16,13 +17,13 @@ public class UsuarioDAO {
         try(Connection connection = new ConectaDB().getConnection()){
             this.sql = "SELECT * FROM usuarios WHERE email = ?";
             this.preparedStatement = connection.prepareStatement(this.sql);
-            this.preparedStatement.setString(1, login);
+            this.preparedStatement.setString(1, login.toUpperCase());
             this.resultSet = this.preparedStatement.executeQuery();
             if(this.resultSet.next()){
                 int codigo = this.resultSet.getInt("codigo");
                 String nome = this.resultSet.getString("nome");
                 String email = this.resultSet.getString("email");
-                String senha = Base64.getEncoder().encodeToString(this.resultSet.getString("senha").getBytes());
+                String senha = new BCryptPasswordEncoder().encode(this.resultSet.getString("senha"));
                 return Usuario.builder().codigo(codigo).nome(nome).email(email).senha(senha).build();
             }
         }
