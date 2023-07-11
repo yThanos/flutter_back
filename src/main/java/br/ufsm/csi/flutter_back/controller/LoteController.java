@@ -21,7 +21,6 @@ public class LoteController {
 
     @PostMapping
     public void addLote(@RequestBody Lote lote){
-        System.out.println(lote);
         if(new LoteDAO().addLote(lote)){
             System.out.println("Lote adicionado com sucesso!");
         } else {

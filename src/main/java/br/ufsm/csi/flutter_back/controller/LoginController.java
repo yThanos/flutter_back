@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.ufsm.csi.flutter_back.db.UsuarioDAO;
 import br.ufsm.csi.flutter_back.model.Usuario;
 
 @RestController
@@ -24,7 +25,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<Usuario> login(@RequestBody Usuario usuario){
-        System.out.println("User: "+usuario.getEmail()+" "+usuario.getSenha());
         final Authentication authentication = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usuario.getEmail(), usuario.getSenha()));
         if(authentication.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -34,5 +34,10 @@ public class LoginController {
         }else {
             return new ResponseEntity<>(HttpStatusCode.valueOf(401));
         }
+    }
+
+    @PostMapping("/criarConta")
+    public void criarConta(@RequestBody Usuario user){
+        new UsuarioDAO().criarConta(user);
     }
 }

@@ -49,9 +49,9 @@ public class WebSecurityConfig {
                 })
                 .cors(cors-> cors.configurationSource( request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(Collections.singletonList("*")); // Allow any origin
-                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allow any method
-                    config.setAllowedHeaders(Collections.singletonList("*")); // Allow any header
+                    config.setAllowedOrigins(Collections.singletonList("*"));
+                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    config.setAllowedHeaders(Collections.singletonList("*"));
                     return config;
                 }))
                 .csrf(AbstractHttpConfigurer::disable)

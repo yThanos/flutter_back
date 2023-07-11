@@ -33,7 +33,7 @@ public class JWTUtil {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis()+ Duration.ofSeconds(400).toMillis()))
+                .setExpiration(new Date(System.currentTimeMillis()+ Duration.ofMinutes(30).toMillis()))
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }

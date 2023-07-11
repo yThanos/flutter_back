@@ -3,7 +3,6 @@ package br.ufsm.csi.flutter_back.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Base64;
 
 import br.ufsm.csi.flutter_back.model.Usuario;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,5 +30,19 @@ public class UsuarioDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void criarConta(Usuario user){
+        try(Connection connection = new ConectaDB().getConnection()){
+            this.sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+            this.preparedStatement = connection.prepareStatement(this.sql);
+            this.preparedStatement.setString(1, user.getNome().toUpperCase());
+            this.preparedStatement.setString(2, user.getEmail().toUpperCase());
+            this.preparedStatement.setString(3, user.getSenha());
+            this.preparedStatement.execute();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
